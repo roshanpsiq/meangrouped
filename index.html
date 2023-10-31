@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculators</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        .calculator {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #4caf50;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn-calculate {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-calculate:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4caf50;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator-container">
+        <!-- Midpoint Calculator -->
+        <div class="calculator">
+            <h2>Midpoint Calculator</h2>
+            <div class="input-group">
+                <label for="midpointLowerBounds">Lower Bounds (comma separated):</label>
+                <input type="text" id="midpointLowerBounds" placeholder="Enter lower bounds">
+            </div>
+            <div class="input-group">
+                <label for="midpointUpperBounds">Upper Bounds (comma separated):</label>
+                <input type="text" id="midpointUpperBounds" placeholder="Enter upper bounds">
+            </div>
+            <button class="btn-calculate" onclick="calculateMidpoints()">Calculate Midpoints</button>
+            <div class="result" id="midpointResult"></div>
+        </div>
+
+        <!-- Grouped Distribution Mean Calculator -->
+        <div class="calculator">
+            <h2>Grouped Distribution Mean Calculator</h2>
+            <div class="input-group">
+                <label for="meanMidpoints">Midpoints:</label>
+                <input type="text" id="meanMidpoints" placeholder="Enter midpoints">
+            </div>
+            <div class="input-group">
+                <label for="meanFrequencies">Frequencies:</label>
+                <input type="text" id="meanFrequencies" placeholder="Enter frequencies">
+            </div>
+            <button class="btn-calculate" onclick="calculateMean()">Calculate Mean</button>
+            <div class="result" id="meanResult"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculateMean() {
+            var midpoints = document.getElementById('meanMidpoints').value.split(',').map(Number);
+            var frequencies = document.getElementById('meanFrequencies').value.split(',').map(Number);
+            var sumMidpoints = 0;
+            var totalFrequency = 0;
+
+            for (var i = 0; i < midpoints.length; i++) {
+                sumMidpoints += midpoints[i] * frequencies[i];
+                totalFrequency += frequencies[i];
+            }
+
+            var mean = sumMidpoints / totalFrequency;
+            document.getElementById('meanResult').innerHTML = 'Mean: ' + mean.toFixed(2);
+        }
+
+        function calculateMidpoints() {
+            var lowerBounds = document.getElementById('midpointLowerBounds').value.split(',').map(Number);
+            var upperBounds = document.getElementById('midpointUpperBounds').value.split(',').map(Number);
+            var midpoints = [];
+
+            for (var i = 0; i < lowerBounds.length; i++) {
+                var lowerBound = lowerBounds[i];
+                var upperBound = upperBounds[i];
+                var midpoint = (lowerBound + upperBound) / 2;
+                midpoints.push(midpoint);
+            }
+
+            document.getElementById('midpointResult').innerHTML = 'Midpoints: ' + midpoints.join(', ');
+        }
+    </script>
+</body>
+
+</html>
